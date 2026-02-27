@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090b0f" />
+  <meta name="description" content="LifeLine AI – Voice-Driven Emergency Triage Assistant. Works offline." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="LifeLine AI" />
+  <title>LifeLine AI – Emergency Triage</title>
+
+  
+  <link rel="manifest" href="manifest.json" />
+
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+ 
+  <div id="offline-banner" class="offline-banner hidden" role="status" aria-live="polite">
+    <span aria-hidden="true">📶</span>
+    Offline — running from cache
+  </div>
+
+
+  
+  <div id="screen-home" class="screen active" role="main" aria-label="LifeLine AI Home">
+
+    
+    <div class="bg-grid"     aria-hidden="true"></div>
+    <div class="bg-glow"     aria-hidden="true"></div>
+    <div class="bg-vignette" aria-hidden="true"></div>
+
+    
+    <div class="pulse-rings" aria-hidden="true">
+      <span class="pr pr1"></span>
+      <span class="pr pr2"></span>
+      <span class="pr pr3"></span>
+    </div>
+
+    <div class="home-inner">
+
+      
+      <div class="home-statusbar" aria-hidden="true">
+        <span class="status-dot"></span>
+        <span class="status-text">System Ready</span>
+      </div>
+
+      
+      <header class="home-header">
+        <div class="brand-cross-wrap">
+          <div class="brand-cross" aria-hidden="true">＋</div>
+          <div class="brand-cross-ring" aria-hidden="true"></div>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-name">LifeLine </h1>
+          <p class="brand-sub">Voice-Driven Emergency Triage</p>
+        </div>
+      </header>
+
+      
+      <p class="home-desc">
+        Speak or type your emergency.<br />
+        Get instant step-by-step guidance.<br />
+        <span class="home-desc-highlight">Works fully offline.</span>
+      </p>
+
+    
+      <div class="cta-wrap">
+        <button
+          id="btn-activate"
+          class="btn btn-cta"
+          onclick="activateEmergency()"
+          aria-label="Activate emergency assistant"
+        >
+          <span class="btn-cta-icon" aria-hidden="true">🚨</span>
+          Activate Emergency
+        </button>
+        <p class="cta-subtext">Voice · Text · Offline-Ready</p>
+      </div>
+
+     
+
+      
+      <div class="home-warning" role="note">
+        <strong>⚠️ Always call 911</strong> first for any life-threatening emergency.
+        This app assists — it does not replace emergency services.
+      </div>
+
+    </div>
+
+    <footer class="home-footer" aria-label="Application info">
+      LifeLine AI · Hackathon Demo · Offline-Ready PWA
+    </footer>
+
+  </div>
+  <div id="screen-input" class="screen" role="main" aria-label="Describe the emergency">
+
+    <div class="screen-topbar">
+      <button class="back-btn" onclick="goTo('home')" aria-label="Back to home">
+        ← Back
+      </button>
+      <h2 class="topbar-title">Describe Emergency</h2>
+    </div>
+
+    <div class="input-body">
+
+      
+      <section class="card mic-card" aria-label="Voice input section">
+
+        
+        <div id="mic-anim" class="mic-anim idle" aria-hidden="true">
+          <div class="mic-rings-wrap">
+            <div class="mic-ring mr1"></div>
+            <div class="mic-ring mr2"></div>
+            <div class="mic-ring mr3"></div>
+          </div>
+          <div class="mic-icon">🎙️</div>
+        </div>
+
+        
+        <p id="mic-status" class="mic-status" role="status" aria-live="polite">
+          Press <strong>Speak</strong> and describe what happened
+        </p>
+
+        
+        <div
+          id="transcript-wrap"
+          class="transcript-wrap hidden"
+          aria-live="polite"
+          aria-label="Voice transcript"
+        >
+          <p class="transcript-label">Heard:</p>
+          <p id="transcript-text" class="transcript-text"></p>
+        </div>
+
+        <button
+          id="btn-speak"
+          class="btn btn-primary full-width"
+          onclick="startListening()"
+          aria-label="Start voice recognition"
+        >
+          🎙️&nbsp; Speak Now
+        </button>
+
+        
+        <p class="mic-lang-note">
+          🌐 Language: <strong id="lang-display">detecting…</strong>
+        </p>
+
+      </section>
+
+      
+      <div class="or-divider" role="separator">
+        <span class="or-line" aria-hidden="true"></span>
+        <span class="or-text">OR TYPE IT</span>
+        <span class="or-line" aria-hidden="true"></span>
+      </div>
+
+      
+      <section class="card text-card" aria-label="Text input section">
+        <label for="text-input" class="text-label">Type Emergency Description</label>
+        <textarea
+          id="text-input"
+          class="text-input"
+          rows="3"
+          placeholder="e.g. my friend is not breathing and unresponsive…"
+          aria-label="Type emergency description"
+          spellcheck="false"
+          autocorrect="off"
+          autocapitalize="sentences"
+        ></textarea>
+        <p class="text-hint" id="text-hint">
+          Describe what you see — the app will analyse and guide you.
+        </p>
+        <button
+          class="btn btn-secondary full-width"
+          onclick="submitText()"
+          aria-label="Submit typed emergency description"
+          aria-describedby="text-hint"
+        >
+          ✔&nbsp; Analyse Text
+        </button>
+      </section>
+
+      
+      <section class="examples-section" aria-label="Quick example scenarios">
+        <p class="examples-label">Quick examples — tap to try:</p>
+        <div class="chips" role="group" aria-label="Example emergency types">
+          <button
+            class="chip chip-cpr"
+            onclick="useExample('person is not breathing and has no pulse')"
+          >🫀 Not Breathing</button>
+          <button
+            class="chip chip-choking"
+            onclick="useExample('child is choking cannot breathe')"
+          >😮 Choking</button>
+          <button
+            class="chip chip-bleeding"
+            onclick="useExample('severe bleeding from the arm wound')"
+          >🩸 Bleeding</button>
+          <button
+            class="chip chip-recovery"
+            onclick="useExample('person fainted and is unconscious')"
+          >😴 Unconscious</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+
+        
+  <div id="screen-confirm" class="screen" role="main" aria-label="Confirmation questions">
+
+    <div class="screen-topbar">
+      <button class="back-btn" onclick="goTo('input')" aria-label="Back to input">
+        ← Back
+      </button>
+      <h2 class="topbar-title">Quick Check</h2>
+    </div>
+
+    <div class="confirm-body">
+      <div class="card confirm-card">
+
+        
+        <div
+          id="confirm-badge"
+          class="emerg-badge"
+          role="status"
+          aria-live="polite"
+        ></div>
+
+        
+        <div class="q-meta" aria-label="Question counter">
+          Question
+          <span id="q-current">1</span>
+          of
+          <span id="q-total">1</span>
+        </div>
+
+    
+        <div
+          id="q-progressbar"
+          class="q-progress-wrap"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          aria-label="Question progress"
+        >
+          <div id="q-progress-fill" class="q-progress-fill"></div>
+        </div>
+
+               <p
+          id="confirm-question"
+          class="confirm-question"
+          aria-live="assertive"
+          aria-atomic="true"
+        ></p>
+
+        
+        <div class="yn-row" role="group" aria-label="Answer yes or no">
+          <button
+            class="btn btn-yes"
+            onclick="answerYesNo('yes')"
+            aria-label="Yes"
+          >✔&nbsp; YES</button>
+          <button
+            class="btn btn-no"
+            onclick="answerYesNo('no')"
+            aria-label="No"
+          >✘&nbsp; NO</button>
+        </div>
+
+    
+        <p class="confirm-help">
+          Answer based on what you can see right now.
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+
+  
+  <div id="screen-action" class="screen" role="main" aria-label="Emergency guidance">
+
+    <div class="screen-topbar">
+            <h2 id="action-topbar-title" class="topbar-title">Emergency Module</h2>
+      <button
+        class="btn btn-outline-sm"
+        onclick="goToResult()"
+        aria-label="Mark as handled and view summary"
+      >Done →</button>
+    </div>
+
+    
+    <div id="action-loading" class="action-loading hidden" aria-live="polite" role="status">
+      <div class="loading-spinner" aria-hidden="true"></div>
+      <p>Preparing guidance…</p>
+    </div>
+
+    
+    <div
+      id="action-content"
+      class="action-content"
+      aria-live="polite"
+      aria-label="Step-by-step emergency instructions"
+    ></div>
+
+  </div>
+
+
+    <div id="screen-result" class="screen" role="main" aria-label="Emergency result summary">
+
+    <div class="result-body">
+
+      
+      <div
+        id="result-severity"
+        class="result-severity"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+      
+      <h2 id="result-heading" class="result-heading"></h2>
+      <p  id="result-summary"  class="result-summary"></p>
+
+      
+      <div class="result-meta-row" aria-label="Emergency metadata">
+        <span id="result-type-tag" class="result-type-tag"></span>
+        <span class="result-time" id="result-time" aria-label="Time of emergency"></span>
+      </div>
+
+      
+      <div class="result-actions" role="group" aria-label="Next steps">
+        <button
+          class="btn btn-hospitals"
+          onclick="findHospitals()"
+          aria-label="Open Google Maps to find nearby hospitals"
+        >
+          🏥&nbsp; Find Nearby Hospitals
+        </button>
+        <button
+          class="btn btn-restart"
+          onclick="restartApp()"
+          aria-label="Restart the application"
+        >
+          🔄&nbsp; Start Over
+        </button>
+      </div>
+
+      
+      <div class="result-tell-box" id="result-tell-box" aria-label="What to tell responders">
+        <p class="tell-box-title">📢 What to Tell Responders</p>
+        <p id="result-tell-text" class="tell-box-body"></p>
+      </div>
+
+      
+      <div class="result-contacts" role="contentinfo" aria-label="Emergency phone numbers">
+        <p class="contacts-title">Emergency Numbers</p>
+        <div class="contacts-grid">
+          <a href="tel:911" class="contact-item contact-link">
+            📞 Emergency: <strong>911</strong>
+          </a>
+          <a href="tel:18002221222" class="contact-item contact-link">
+            ☎ Poison Control: <strong>1-800-222-1222</strong>
+          </a>
+          <span class="contact-item">🚑 Non-Emergency: <strong>311</strong></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <script src="script.js"></script>
+
+  
+  <script>
+    
+    (function () {
+      var el = document.getElementById('lang-display');
+      if (el) el.textContent = navigator.language || 'en-US';
+    })();
+
+   
+    (function () {
+      var banner = document.getElementById('offline-banner');
+      if (!banner) return;
+      function syncBanner() {
+        if (!navigator.onLine) {
+          banner.classList.remove('hidden');
+        } else {
+          banner.classList.add('hidden');
+        }
+      }
+      window.addEventListener('online',  syncBanner);
+      window.addEventListener('offline', syncBanner);
+      syncBanner();
+    })();
+  </script>
+
+</body>
+</html>
