@@ -1,9 +1,7 @@
-LifeLine AI – Voice-Driven Emergency Triage Assistant
+LifeLine – Voice-Driven Emergency Triage Assistant
 
 Project Description
-LifeLine is a browser-based emergency triage assistant designed to guide bystanders during the critical first minutes of a medical emergency.
-It uses voice input and intelligent keyword classification to identify emergency situations like choking,cardiac arrest,unconsiousness and provides structured step-by-step guidance including CPR instructions, choking rescue steps, and emergency escalation advice.
-The system works directly in the browser, requires no installation, and is optimized for fast response during high-stress situations.
+LifeLine is a voice-enabled emergency triage web application designed to guide bystanders during critical medical situations before professional help arrives. In real emergencies, panic and confusion often prevent people from taking immediate action. LifeLine addresses this by providing structured, step-by-step first-aid guidance through both voice and text interaction. Users can describe the emergency by speaking or typing, and the system uses rule-based keyword detection and logical decision flow to classify the situation and activate the appropriate response module. The application includes four core modules: a CPR module for cardiac arrest cases that provides proper hand placement guidance, compression instructions, and an audio-synchronized counting timer; a choking module that guides users through back blows and abdominal thrusts and automatically escalates to CPR if the person becomes unconscious; a severe bleeding module that instructs users to apply direct pressure and control blood loss safely; and a recovery position module for unconscious but breathing individuals to maintain a clear airway. The system also asks short confirmation questions to improve accuracy before delivering instructions. LifeLine supports browser-based speech recognition for hands-free use and includes a text input fallback if the microphone is unavailable.
 
 Tech Stack
 Frontend: HTML5, CSS3, JavaScript
@@ -133,7 +131,8 @@ Screenshots
 ##quick check
 <img width="1911" height="867" alt="Quick check" src="https://github.com/user-attachments/assets/6174f7ee-210d-4532-96ab-24bb5a29745f" />
 
-Demo Video Link
+Demo Video Link: 
+https://drive.google.com/file/d/1xHc2-f5nejDQ2fhdyFST-4gnHrhE9LvC/view?usp=drivesdk
 
 
 
