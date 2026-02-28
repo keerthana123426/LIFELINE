@@ -121,18 +121,24 @@ lifeline-ai/
 └── README.md
 
 Screenshots
-
-
 ### Home Screen
-![Home Screen](images/home screen.png)
+<img width="1911" height="873" alt="home screen" src="https://github.com/user-attachments/assets/9d1d92b0-2bf3-4f23-b38e-221d6bf4ccf0" />
 
 ### CPR Module
-![CPR Module](images/CPR counter.png)
-
+<img width="1869" height="837" alt="CPR counter" src="https://github.com/user-attachments/assets/e515ec9f-7a87-47a1-b879-5794e0814080" />
 ### Nearby hospitals information Module
-![nearby hospitals information](images/Nearby hospitals information.png)
+<img width="1617" height="817" alt="Nearby hospitals information" src="https://github.com/user-attachments/assets/59da0c55-aeab-48e9-9b77-6f25b6f1b5d1" />
+##input screen
+<img width="1889" height="865" alt="Input screen" src="https://github.com/user-attachments/assets/04198472-508a-44ec-a574-50472910f37c" />
+##quick check
+<img width="1911" height="867" alt="Quick check" src="https://github.com/user-attachments/assets/6174f7ee-210d-4532-96ab-24bb5a29745f" />
+
+Demo Video Link
+
+
 
 Team Members
+
 
 Keerthana John
 Gayathri M H
